@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+OUT=${OUT:-/vz/template/cache/openvz}
+#rm -rf $OUT
+mkdir -p $OUT
+
+function cleanup() {
+	echo 1>&2
+	echo -n "Aborting, please wait ..." 1>&2
+	rm -rf $OUT ${CAPSFILE}
+	echo 1>&2
+}
+
+trap cleanup EXIT
+
+function gen_cap_script() {
+	find $1/ -xdev -type f | \
+		xargs getfattr  --absolute-names -n security.capability 2>/dev/null | \
+		awk '
+		/^# file: / {
+			sub("^'$1'", "", $3);
+			file=$3; next;
+		}
+		/^security.capability=/ {
+			print "setfattr -n security.capability -v " \
+				substr($0,21) " " file; next
+		}'
+}
+
+if test -z "$*"; then
+	COMPLETE_SET=yes
+	LIST=$(vzpkg list -O | awk 'NF>1 {print $1}')
+else
+	LIST=$*
+fi
+
+NUM=$(echo "$LIST" | wc -w)
+CAPSFILE=./CAPABILITIES.txt
+
+test -n "$COMPLETE_SET" && mv -f ${CAPSFILE} ${CAPSFILE}.prev
+
+let I=0
+for f in $LIST; do
+	let I++
+	let veid=100100+I
+	printf "[%2d/%2d] Repacking $f ." $I $NUM
+	vzctl --quiet create $veid --ostemplate $f
+	vzctl --quiet mount $veid
+	veroot=$(vzlist -H -o root $veid)
+	# Make sure there are no interfaces.template files in Deb/Ubu templates
+	# OpenVZ bugs #998, #1454
+	rm -f $veroot/etc/network/interfaces.template
+	echo -n '.'
+	if test -n "$COMPLETE_SET"; then
+		CAPS=$(gen_cap_script $veroot)
+		if ! test -z "$CAPS"; then
+			echo "== CAPABILITIES FOR $f ==" >> $CAPSFILE
+			echo "$CAPS" >> $CAPSFILE
+		fi
+	fi
+	if ! tar --numeric-owner -czpf $OUT/$f.tar.gz -C $veroot .; then
+		echo ". tar FAILED ($?)"
+		exit 1
+	fi
+	# Check
+	if gzip -t $OUT/$f.tar.gz; then
+		echo -n '.'
+	else
+		echo ". gzip -t FAILED ($?)"
+		exit 1
+	fi
+	echo ' done'
+	vzctl umount $veid
+	vzctl destroy $veid
+done
+
+chgrp -R upload $OUT
+
+if test -n "$COMPLETE_SET"; then
+	diff -u ${CAPSFILE}.prev ${CAPSFILE}
+fi
+
+trap - EXIT

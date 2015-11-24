@@ -1,0 +1,84 @@
+== CAPABILITIES FOR suse-13.2-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+== CAPABILITIES FOR suse-13.1-x86 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+== CAPABILITIES FOR suse-13.1-x86-minimal ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+== CAPABILITIES FOR suse-13.1-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+== CAPABILITIES FOR suse-13.1-x86_64-minimal ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+== CAPABILITIES FOR fedora-22-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+== CAPABILITIES FOR fedora-21-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+== CAPABILITIES FOR fedora-20-x86 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+== CAPABILITIES FOR fedora-20-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+== CAPABILITIES FOR fedora-19-x86 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+== CAPABILITIES FOR fedora-19-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+== CAPABILITIES FOR ubuntu-15.04-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/arping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/traceroute6.iputils
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+== CAPABILITIES FOR ubuntu-15.04-x86_64-minimal ==
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+== CAPABILITIES FOR debian-8.0-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/arping
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/traceroute6.iputils
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /bin/ping6
+== CAPABILITIES FOR debian-8.0-x86_64-minimal ==
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /bin/ping6
+== CAPABILITIES FOR centos-7-x86_64 ==
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAsAAAAAAAAAAAAAAAAAAAAA= /usr/sbin/suexec
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping
+== CAPABILITIES FOR centos-7-x86_64-minimal ==
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping6
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/bin/ping
+setfattr -n security.capability -v 0sAQAAAgIACAAAAAAAAAAAAAAAAAA= /usr/bin/systemd-detect-virt
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/clockdiff
+setfattr -n security.capability -v 0sAQAAAgAgAAAAAAAAAAAAAAAAAAA= /usr/sbin/arping

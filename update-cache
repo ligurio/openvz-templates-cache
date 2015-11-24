@@ -1,0 +1,67 @@
+#!/bin/bash
+
+export PATH=/sbin:/usr/sbin:$PATH
+VZPKG=vzpkg
+YUM=yum
+LIST=${*:-$(${VZPKG} list -O | awk '{print $1}')}
+BF=[1m
+NF=[0m
+GF=[32m
+SET_TITLE=']0;'
+ST='\\'
+
+log() {
+	local d=$(date +%H:%M:%S)
+	echo [${GF}${d}${NF}] ${BF}$*${NF}
+	echo [$d] $* >> update.log
+	echo -ne ${SET_TITLE}[$d] $*${ST}
+}
+
+install() {
+	local t redo='' i=1
+	for t in $*; do
+		log "[$i/$#] Installing template for $t"
+		if ! $YUM install -y $t; then
+			redo="$redo $t"
+			log "[$i/$#] Failed to install $t"
+		fi
+		let i++
+	done
+	RE=$redo
+}
+
+cache() {
+	local t redo='' i=1
+	for t in $*; do
+		log "[$i/$#] Updating cache for $t"
+		if ! $VZPKG update cache $t; then
+			redo="$redo $t"
+			log "[$i/$#] Failed to update $t"
+		fi
+		let i++
+	done
+	RE=$redo
+}
+
+if ! test -z "$*"; then
+	LIST=$*
+fi
+
+log "=== (1) Starting to update templates: $LIST"
+install $LIST
+cache $LIST
+I=2
+MAX=5
+while test -n "$RE" -a $I -lt $MAX; do
+	log "=== ($I/$MAX) The following templates failed, retrying: $RE"
+	install $RE
+	cache $RE
+	let I++
+done
+if test -z "$RE"; then
+	log "=== ($I) All templates were updated succesfully"
+	exit 0
+else
+	log "=== ($I) Some templates were failed to update: $RE"
+	exit 1
+fi
