@@ -1,0 +1,128 @@
+diff -u default/packages minimal/packages
+--- default/packages	2012-04-26 14:38:05.000000000 -0400
++++ minimal/packages	2014-05-13 23:18:50.525365200 -0400
+@@ -1,122 +1,15 @@
+-aptitude
+-apache2
+-apache2-doc
+-apache2-mpm-prefork
+-apache2-utils
+-apache2.2-common
+ apt
+-apt-utils
+-bind9
+-bind9-host
+-binutils
+-bzip2
+-ca-certificates
+-console-common
+-console-data
+-console-tools
+-console-tools-dev
+-cpio
+-cracklib-runtime
+-db4.8-util
+-debconf-utils
+-defoma
+-dhcp3-client
+-dhcp3-common
+ ed
+-expat
+-fetchmail
+-file
+-finger
+-fontconfig
+-fontconfig-config
+-ftp
+-gettext
+-gnupg
+-gpgv
+-groff-base
+-info
+-initramfs-tools
+-iproute
+ iptables
+-iputils-arping
+-iputils-tracepath
+-klibc-utils
+-klogd
+-ldap-utils
+-less
+-locales
+-logrotate
+-lsb-base
++iputils-ping
+ lsb-release
+ lsof
+-lynx
+-m4
+-bsd-mailx
+-make
+-man-db
+-manpages
+-memtester
+-mime-support
+-mlocate
+-module-init-tools
+-mtools
+-ncurses-term
+-net-tools
+-odbcinst
+ openssh-blacklist
+ openssh-client
+ openssh-server
+-openssl
+-openssl-blacklist
+-perl
+-perl-modules
+-portmap
+ procinfo
+-procmail
+ psmisc
+-psutils
+-pwgen
+-python
+-python-minimal
+-python2.6
+-python2.6-minimal
+ quota
+-rmail
+-rsync
+-samba
+-samba-common
+-sasl2-bin
+-screen
+-sendmail
+-sendmail-base
+-sendmail-bin
+-sendmail-cf
+-sendmail-doc
+-sensible-mda
+-sharutils
+-smbfs
+-snmp
+-ssl-cert
+-sudo
+-sysklogd
+-syslinux
+-tcpdump
+-tcsh
+-telnet
+-tofrodos
+-traceroute
+-ttf-dejavu
+-ttf-dejavu-core
+-ttf-dejavu-extra
+-ttf-freefont
+-udev
+-unixodbc
+-unzip
+-uuid-runtime
++rsyslog
+ vim
+-vim-common
+-vim-runtime
+ wget
+-whois
+-wide-dhcpv6-client
+-xinetd

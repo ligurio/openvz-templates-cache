@@ -1,0 +1,106 @@
+diff -u default/packages minimal/packages
+--- default/packages	2015-05-18 18:45:05.000000000 -0400
++++ minimal/packages	2015-05-18 18:46:41.994973390 -0400
+@@ -1,101 +1,15 @@
+-apache2
+-apache2-doc
+-apache2-mpm-prefork
+-apache2-utils
+-apache2-data
+ apt
+-apt-utils
+-bind9
+-bind9-host
+-binutils
+-bzip2
+-ca-certificates
+-cifs-utils
+-console-common
+-console-data
+-cracklib-runtime
+-cron
+-debconf-utils
+-dialog
+-isc-dhcp-client
+-isc-dhcp-common
+ ed
+-expat
+-fetchmail
+-file
+-finger
+-fontconfig
+-fontconfig-config
+-ftp
+-gettext
+-gnupg
+-gpgv
+-groff-base
+-info
+ iptables
+-iputils-arping
+ iputils-ping
+-iputils-tracepath
+-ldap-utils
+-less
+-logrotate
+ lsb-release
+ lsof
+-lynx
+-m4
+-bsd-mailx
+-make
+-man-db
+-manpages
+-memtester
+-mime-support
+-mlocate
+-mtools
+-ncurses-term
+-odbcinst
+ openssh-blacklist
+ openssh-client
+ openssh-server
+-openssl
+-openssl-blacklist
+-patch
+-rpcbind
+ procinfo
+-procmail
+ psmisc
+-psutils
+-pwgen
+-python3
+ quota
+-rsync
+-samba
+-samba-common
+-sasl2-bin
+-screen
+-postfix
+-sharutils
+-snmp
+-ssl-cert
+-sudo
+ rsyslog
+-syslinux
+-tcpdump
+-tcsh
+-telnet
+-tofrodos
+-traceroute
+-ttf-dejavu
+-ttf-dejavu-core
+-ttf-dejavu-extra
+-ttf-freefont
+-ubuntu-keyring
+-unixodbc
+-unzip
+-uuid-runtime
+ vim
+-vim-common
+-vim-runtime
+ wget
+-whois
+-wide-dhcpv6-client
+-xinetd
+Only in minimal: packages.orig

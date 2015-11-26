@@ -1,0 +1,56 @@
+Only in default: doc
+diff -u default/packages devel/packages
+--- default/packages	2014-03-12 10:55:04.000000000 -0400
++++ devel/packages	2012-12-06 16:59:10.757064658 -0500
+@@ -19,7 +19,6 @@
+ mailcap
+ iproute
+ iptables
+-iptables-ipv6
+ jwhois
+ openssh-clients
+ openssh-server
+@@ -82,24 +81,31 @@
+ vzdummy-glibc
+ vzdummy-init-fc13
+ zlib.i686
+-zlib.x86_64
+ xz-libs.i686
+-xz-libs.x86_64
+ glib2.i686
+-glib2.x86_64
+ bzip2-libs.i686
+-bzip2-libs.x86_64
+ libstdc++.i686
+-libstdc++.x86_64
+ libxml2.i686
+-libxml2.x86_64
+ ncurses-libs.i686
+-ncurses-libs.x86_64
+ libacl.i686
+-libacl.x86_64
+ libattr.i686
+-libattr.x86_64
+ libpng.i686
+-libpng.x86_64
+ e2fsprogs-libs.i686
+-e2fsprogs-libs.x86_64
++gcc
++gcc-c++
++nasm
++rpm-build
++make
++strace
++gdb
++flex
++acl
++attr
++autoconf
++automake
++libtool
++redhat-rpm-config
++patchutils
++hmaccalc
++ltrace
++pkgconfig
+Only in default: packages.rpmsave

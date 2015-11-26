@@ -1,0 +1,196 @@
+Only in minimal: mid-pre-install-x
+diff -u default/packages minimal/packages
+--- default/packages	2014-04-29 20:15:57.838259941 -0400
++++ minimal/packages	2014-05-13 20:31:41.936994451 -0400
+@@ -1,111 +1,15 @@
+-apache2
+-apache2-doc
+-apache2-mpm-prefork
+-apache2-utils
+-apache2.2-common
+ apt
+-apt-utils
+-bind9
+-bind9-host
+-binutils
+-bzip2
+-ca-certificates
+-console-common
+-console-data
+-console-tools
+-console-tools-dev
+-cracklib-runtime
+-cron
+-debconf-utils
+-defoma
+-isc-dhcp-client
+-isc-dhcp-common
+ ed
+-expat
+-fetchmail
+-file
+-finger
+-fontconfig
+-fontconfig-config
+-ftp
+-gettext
+-gnupg
+-gpgv
+-groff-base
+-info
+ iptables
+-iputils-arping
+ iputils-ping
+-iputils-tracepath
+-klogd
+-ldap-utils
+-less
+-logrotate
+ lsb-release
+ lsof
+-lynx
+-m4
+-bsd-mailx
+-make
+-man-db
+-manpages
+-memtester
+-mime-support
+-mlocate
+-mtools
+-ncurses-term
+-odbcinst
+ openssh-blacklist
+ openssh-client
+ openssh-server
+-openssl
+-openssl-blacklist
+-perl
+-perl-modules
+-portmap
+ procinfo
+-procmail
+ psmisc
+-psutils
+-pwgen
+-python
+ quota
+-rmail
+-rsync
+-samba
+-samba-common
+-sasl2-bin
+-screen
+-sendmail
+-sendmail-base
+-sendmail-bin
+-sendmail-cf
+-sendmail-doc
+-sensible-mda
+-sharutils
+-smbfs
+-snmp
+-ssl-cert
+-sudo
+-sysklogd
+-syslinux
+-tcpdump
+-tcsh
+-telnet
+-tofrodos
+-traceroute
+-ttf-dejavu
+-ttf-dejavu-core
+-ttf-dejavu-extra
+-ttf-freefont
+-ubuntu-keyring
+-unixodbc
+-unzip
+-uuid-runtime
++rsyslog
+ vim
+-vim-common
+-vim-runtime
+ wget
+-whois
+-wide-dhcpv6-client
+-xinetd
+diff -u default/post-install minimal/post-install
+--- default/post-install	2015-05-25 13:42:10.000000000 -0400
++++ minimal/post-install	2014-04-24 17:45:02.911195834 -0400
+@@ -32,18 +32,6 @@
+ 	fi
+ fi
+ 
+-# Create lo setup config
+-
+-echo "
+-auto lo
+-iface lo inet loopback
+-	address 127.0.0.1
+-	netmask 255.0.0.0
+-	broadcast 127.255.255.255
+-	up ip route replace 127.0.0.0/8 dev lo
+-" > etc/network/interfaces.template
+-
+-
+ # disable all xinetd services without disable option
+ CFG_FILE=/etc/xinetd.conf
+ if [ -f $CFG_FILE ]; then
+@@ -82,8 +70,15 @@
+ 	fi
+ fi
+ 
++# Create lo setup config
++
++echo "
++auto lo
++iface lo inet loopback
++" > etc/network/interfaces
++
+ # turn off and stop some services
+-for i in klogd bind9 quotarpc fetchmail ondemand rsync wide-dhcpv6-client; do
++for i in klogd quotarpc fetchmail ondemand rsync wide-dhcpv6-client; do
+ 	usr/sbin/update-rc.d -f $i remove > /dev/null 2>&1
+ 	etc/init.d/$i stop > /dev/null 2>&1
+ done
+@@ -145,9 +140,6 @@
+ 
+ fi
+ 
+-# Disable samba and bind9 ifup hook
+-chmod 0644 etc/network/if-down.d/bind9 etc/network/if-up.d/bind9 etc/network/if-up.d/samba
+-
+ # Clean /run
+ rm -rf /run/*
+ 
+@@ -246,7 +238,7 @@
+ touch etc/inittab
+ 
+ # Turn back wide-dhcpv6-client init script and clean default conf file
+-for i in etc/init.d/wide-dhcpv6-client etc/init/procps.conf etc/init/bluetooth.conf; do
++for i in etc/init.d/wide-dhcpv6-client etc/init/procps.conf; do
+ 	mv -f $i.dpkg-dist $i
+ done
+ # regenerate dhcp6cctlkey if exists
+Only in default: post-install.rpmsave
+diff -u default/pre-cache minimal/pre-cache
+--- default/pre-cache	2015-05-25 13:42:10.000000000 -0400
++++ minimal/pre-cache	2014-04-29 22:23:26.743788201 -0400
+@@ -46,15 +46,6 @@
+ exec /bin/true
+ " > etc/init/procps.conf
+ 
+-mkdir -p etc/init
+-echo "description	\"dummy upstart config\"
+-
+-start on startup
+-
+-task
+-exec /bin/true
+-" > etc/init/bluetooth.conf
+-
+ # add some basic groups and users, provides by base-passwd
+ # some debs (base-files,..) use it before base-passwd installation
+ echo "root:x:0:
+Only in minimal: pre-cache-x

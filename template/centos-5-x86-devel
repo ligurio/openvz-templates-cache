@@ -1,0 +1,26 @@
+Only in default: doc
+Only in devel: environment
+diff -u default/packages devel/packages
+--- default/packages	2012-12-06 16:49:38.156474437 -0500
++++ devel/packages	2012-04-19 19:27:21.000000000 -0400
+@@ -83,3 +83,17 @@
+ vzdummy-jre-el5
+ vzdummy-apache
+ yum
++gcc
++gcc-c++
++nasm
++rpm-build
++make
++strace
++gdb
++flex
++acl
++attr
++autoconf
++automake
++libtool
++pkgconfig
+Only in devel: post-upgrade
+Only in default: repositories
+Only in default: technologies

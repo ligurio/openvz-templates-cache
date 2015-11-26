@@ -1,0 +1,90 @@
+Only in default: ct2vm
+diff -u default/packages minimal/packages
+--- default/packages	2015-06-30 13:57:09.000000000 -0400
++++ minimal/packages	2014-07-08 11:17:08.922471002 -0400
+@@ -1,84 +1,18 @@
+-authconfig
+ bash
+-crontabs
+-cronie
+-cronie-noanacron
+-diffutils
+-dhclient
+-hostname
+ rootfiles
+-info
+ passwd
+ rpm
+-man-db
+-man-pages
+ tmpwatch
+-logrotate
+-bind
+-finger
+-finger-server
+-ftp
+-httpd
+-mailcap
+ iproute
+-iptables
+-iptables-services
+ openssh-clients
+ openssh-server
+ net-snmp
+ net-snmp-utils
+-nscd
+-policycoreutils
+-rsync
+-rsyslog
+-samba
+-samba-client
+-sendmail
+-sendmail-cf
+-stunnel
+-talk
+-talk-server
+-xinetd
+-hunspell
+-hunspell-en
+-perl
+-python
+-slang
+-tcsh
+ ed
+ less
+ vim-minimal
+-vim-enhanced
+-acl
+-attr
+-binutils
+-bzip2
+-curl
+-e2fsprogs
+-elfutils
+-ethtool
+-fetchmail
+-gnupg
+-gzip
+-make
+-mailx
+-ncompress
+-ntsysv
+-lsof
+-rpcbind
+ quota
+-tcpdump
+-telnet
+-time
+-traceroute
+-screen
+-setuptool
+-mlocate
+-sudo
+-unzip
+ wget
+-which
+ tar
+-xz
+ yum
+ vzdummy-systemd-el7
+Only in minimal: packages-def

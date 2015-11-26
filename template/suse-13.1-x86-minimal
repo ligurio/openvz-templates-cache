@@ -1,0 +1,124 @@
+diff -u default/packages minimal/packages
+--- default/packages	2013-12-21 13:18:04.000000000 -0500
++++ minimal/packages	2014-05-13 20:40:19.349566763 -0400
+@@ -1,120 +1,17 @@
+ bash
+-cronie
+-diffutils
+-filesystem
+-info
+ rpm
+-man
+-man-pages
+ procps
+-SuSEfirewall2
+ udev
+-bind
+-finger
+-ncftp
+-apache2
+-apache2-prefork
+ iproute2
+ iptables
+ openssh
+-openssh-askpass
+-net-snmp
+-rsync
+-samba
+-samba-client
+-sendmail
+-psmisc
+-xinetd
+ rsyslog
+-aspell
+-aspell-en
+-perl
+-python
+-tcsh
+ ed
+-less
+-vim
+-lynx
+ zypper
+-pkg-config
+-binutils
+-curl
+-fetchmail
+-gpg2
+-gzip
+-make
+-mailx
+ lsof
+-rpcbind
+ quota
+-tcpdump
+-telnet
+-net-tools
+-kbd
+-screen
+-sharutils
+-sudo
+-unzip
+ wget
+ tar
+-findutils
+-words
+-make
+-timezone
+-gd
+-findutils-locate
+-module-init-tools
+-sysfsutils
+-pam-modules
+ sysvinit
+ iputils
+-cyrus-sasl-saslauthd
+-cyrus-sasl-plain
+-cyrus-sasl-digestmd5
+-cyrus-sasl-gssapi
+-dhcp-client
+-yast2
+-yast2-backup
+-yast2-bootloader
+-yast2-core
+-yast2-country
+-yast2-firewall
+-yast2-http-server
+-yast2-inetd
+-yast2-installation
+-yast2-kerberos-client
+-yast2-ldap
+-yast2-ldap-client
+-yast2-mail
+-yast2-network
+-yast2-nfs-client
+-yast2-online-update
+-yast2-packager
+-yast2-dns-server
+-yast2-pam
+ vzdummy-systemd-suse
+-bash-doc
+-bash-lang
+-bundle-lang-common-de
+-bundle-lang-common-en
+-checkmedia
+-gpg2-lang
+-groff-full
+-nfs-client
+-release-notes-openSUSE
+-sharutils-lang
+-tar-lang
+-traceroute
+-unzip-doc
+-vim-data
+-xauth
+-xdg-utils
+-yast2-add-on
+-yast2-restore
+-yast2-tune
+-zypper-log
+-aspell-ispell
+-aspell-spell
+-command-not-found
+-perl-doc
+-libyui-ncurses-pkg5

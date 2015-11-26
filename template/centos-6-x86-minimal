@@ -1,0 +1,85 @@
+diff -u default/packages minimal/packages
+--- default/packages	2013-12-17 09:51:11.000000000 -0500
++++ minimal/packages	2014-05-13 21:30:53.484161874 -0400
+@@ -1,80 +1,16 @@
+-authconfig
+ bash
+-crontabs
+-diffutils
+-dhclient
+ rootfiles
+-info
+ passwd
+ rpm
+-man
+-man-pages
+ tmpwatch
+-bind
+-bind-config
+-finger
+-finger-server
+-ftp
+-httpd
+-mailcap
+ iproute
+-iptables
+-iptables-ipv6
+-jwhois
+ openssh-clients
+ openssh-server
+-net-snmp
+-net-snmp-utils
+-nscd
+-rsync
+-samba
+-samba-client
+-sendmail
+-sendmail-cf
+-stunnel
+-talk
+-talk-server
+-xinetd
+-cronie
+-cronie-noanacron
+-aspell
+-perl
+-python
+-slang
+-tcsh
++rsyslog
+ ed
+-less
+ vim-minimal
+-vim-enhanced
+-lynx
+-acl
+-attr
+-binutils
+-curl
+-elfutils
+-fetchmail
+-gnupg
+-gzip
+-make
+-mailx
+-ncompress
+-ntsysv
+-lsof
+-policycoreutils
+-portmap
+ quota
+-tcpdump
+-telnet
+-time
+-traceroute
+-screen
+-setuptool
+-mlocate
+-sudo
+-unzip
+-utempter
+ wget
+-which
+ tar
+ yum
+ vzdev
