@@ -36,9 +36,9 @@ else
 fi
 
 NUM=$(echo "$LIST" | wc -w)
-CAPSFILE=./CAPABILITIES.txt
+#CAPSFILE=./CAPABILITIES.txt
 
-test -n "$COMPLETE_SET" && mv -f ${CAPSFILE} ${CAPSFILE}.prev
+#test -n "$COMPLETE_SET" && mv -f ${CAPSFILE} ${CAPSFILE}.prev
 
 let I=0
 for f in $LIST; do
@@ -52,13 +52,13 @@ for f in $LIST; do
 	# OpenVZ bugs #998, #1454
 	rm -f $veroot/etc/network/interfaces.template
 	echo -n '.'
-	if test -n "$COMPLETE_SET"; then
-		CAPS=$(gen_cap_script $veroot)
-		if ! test -z "$CAPS"; then
-			echo "== CAPABILITIES FOR $f ==" >> $CAPSFILE
-			echo "$CAPS" >> $CAPSFILE
-		fi
-	fi
+	#if test -n "$COMPLETE_SET"; then
+	#	CAPS=$(gen_cap_script $veroot)
+	#	if ! test -z "$CAPS"; then
+	#		echo "== CAPABILITIES FOR $f ==" >> $CAPSFILE
+	#		echo "$CAPS" >> $CAPSFILE
+	#	fi
+	#fi
 	if ! tar --numeric-owner -czpf $OUT/$f.tar.gz -C $veroot .; then
 		echo ". tar FAILED ($?)"
 		exit 1
@@ -75,10 +75,10 @@ for f in $LIST; do
 	vzctl destroy $veid
 done
 
-chgrp -R upload $OUT
+#chgrp -R upload $OUT
 
-if test -n "$COMPLETE_SET"; then
-	diff -u ${CAPSFILE}.prev ${CAPSFILE}
-fi
+#if test -n "$COMPLETE_SET"; then
+#	diff -u ${CAPSFILE}.prev ${CAPSFILE}
+#fi
 
 trap - EXIT
