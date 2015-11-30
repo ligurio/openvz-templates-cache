@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 set -o pipefail
-OUT=${OUT:-/vz/template/cache/openvz}
-#rm -rf $OUT
+OUT=${OUT:-cache}
+rm -rf $OUT
 mkdir -p $OUT
 
 function cleanup() {
