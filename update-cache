@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source templates
+
 export PATH=/sbin:/usr/sbin:$PATH
 VZPKG=vzpkg
 YUM=yum
