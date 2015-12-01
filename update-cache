@@ -21,32 +21,45 @@ log() {
 
 isflavor() {
 	for f in $FLAVORS; do
-		if [ "$t" == "$f" ]; then
+		if [ "$1" == "$f" ]; then
 			return 0
 		fi
 	done
+}
+
+prepare() {
+	OS=$(echo $1 | sed 's/^\([a-z]*\)-.*$/\1/g')
+	ARCH=$(echo $1 | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
+	V=$(echo $1 | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
+	FLAVOR=$(echo $1 | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
+	VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
+	if [ -e $VZPATH ]; then return 0; fi
+	mkdir $VZPATH/$FLAVOR
+	cd $VZPATH/$FLAVOR
+	ls -1 ../default/ | while read i; do ln -s ../default/$i $i; done
+	cd -
+	if ! rpm -q --quiet patch; then
+		yum install -y patch
+	fi
+	cat template/$1 | patch --directory $VZPATH/$FLAVOR/ 
 }
 
 install() {
 	local t redo='' i=1
 	for t in $*; do
 		log "[$i/$#] Installing template for $t"
-		if ! $YUM install -y $t; then
-			redo="$redo $t"
-			log "[$i/$#] Failed to install $t"
-		fi
-		if isflavor($t); then
-			OS=$(echo $t | sed 's/^\(.*\)-[0-9]-.*$/\1/g')
-			ARCH=$(echo $t | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
-			V=$(echo $t | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
-			FLAVOR=$(echo $t | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
-			VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
-			mkdir $VZPATH/$FLAVOR;
-			ls -1 $VZPATH/default | while read $d; do
-				ln -s $VZPATH/default/$d $VZPATH/$FLAVOR/$d;
-			done;
-			yum install -y patch
-			patch --directory $VZPATH/ < template/$f
+		if isflavor $t; then
+			name=$(echo $t | sed 's/^\(.*\)-.*$/\1/g')
+			if ! $YUM install -y $name; then
+				redo="$redo $t"
+				log "[$i/$#] Failed to install $t"
+			fi
+			prepare $t
+		else
+			if ! $YUM install -y $t; then
+				redo="$redo $t"
+				log "[$i/$#] Failed to install $t"
+			fi
 		fi
 		let i++
 	done
