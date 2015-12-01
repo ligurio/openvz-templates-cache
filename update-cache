@@ -19,29 +19,35 @@ log() {
 	echo -ne ${SET_TITLE}[$d] $*${ST}
 }
 
+isflavor() {
+	for f in $FLAVORS; do
+		if [ "$t" == "$f" ]; then
+			return 0
+		fi
+	done
+}
+
 install() {
 	local t redo='' i=1
 	for t in $*; do
-		OS=$(echo $t | sed 's/^\(.*\)-[0-9]-.*$/\1/g')
-		ARCH=$(echo $t | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
-		V=$(echo $t | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
-		FLAVOR=$(echo $t | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
 		log "[$i/$#] Installing template for $t"
-		if ! $YUM install -y $OS-$V-$ARCH; then
+		if ! $YUM install -y $t; then
 			redo="$redo $t"
 			log "[$i/$#] Failed to install $t"
 		fi
-		yum install -y patch
-		for f in $FLAVORS; do
-			if [ "$t" == "$f" ]; then
-				VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
-				mkdir $VZPATH/$FLAVOR;
-				ls -1 $VZPATH/default | while read $d; do
-					ln -s $VZPATH/default/$d $VZPATH/$FLAVOR/$d;
-				done;
-				patch --directory $VZPATH/ < template/$f
-			fi
-		done
+		if isflavor($t); then
+			OS=$(echo $t | sed 's/^\(.*\)-[0-9]-.*$/\1/g')
+			ARCH=$(echo $t | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
+			V=$(echo $t | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
+			FLAVOR=$(echo $t | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
+			VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
+			mkdir $VZPATH/$FLAVOR;
+			ls -1 $VZPATH/default | while read $d; do
+				ln -s $VZPATH/default/$d $VZPATH/$FLAVOR/$d;
+			done;
+			yum install -y patch
+			patch --directory $VZPATH/ < template/$f
+		fi
 		let i++
 	done
 	RE=$redo
@@ -50,12 +56,8 @@ install() {
 cache() {
 	local t redo='' i=1
 	for t in $*; do
-		OS=$(echo $t | sed 's/^\(.*\)-[0-9]-.*$/\1/g')
-		ARCH=$(echo $t | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
-		V=$(echo $t | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
-		FLAVOR=$(echo $t | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
 		log "[$i/$#] Updating cache for $t"
-		if ! $VZPKG update cache $OS-$V-$ARCH; then
+		if ! $VZPKG update cache $t; then
 			redo="$redo $t"
 			log "[$i/$#] Failed to update $t"
 		fi
