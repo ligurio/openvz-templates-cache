@@ -49,14 +49,15 @@ install() {
 	for t in $*; do
 		log "[$i/$#] Installing template for $t"
 		if isflavor $t; then
+			log "[$i/$#] It is a flavor - $name"
 			name=$(echo $t | sed 's/^\(.*\)-.*$/\1/g')
-			if ! $YUM install -y $name; then
+			if ! $YUM install -y $name"-ez"; then
 				redo="$redo $t"
-				log "[$i/$#] Failed to install $t"
+				log "[$i/$#] Failed to install $name"
 			fi
 			prepare $t
 		else
-			if ! $YUM install -y $t; then
+			if ! $YUM install -y $t"-ez"; then
 				redo="$redo $t"
 				log "[$i/$#] Failed to install $t"
 			fi
