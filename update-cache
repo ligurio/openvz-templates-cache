@@ -33,7 +33,7 @@ prepare() {
 	V=$(echo $1 | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
 	FLAVOR=$(echo $1 | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
 	VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
-	if [ -e $VZPATH ]; then return 0; fi
+	if [ -e $VZPATH/$FLAVOR ]; then return 0; fi
 	mkdir $VZPATH/$FLAVOR
 	cd $VZPATH/$FLAVOR
 	ls -1 ../default/ | while read i; do ln -s ../default/$i $i; done
