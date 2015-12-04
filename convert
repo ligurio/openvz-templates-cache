@@ -70,6 +70,7 @@ for f in $LIST; do
 		echo ". gzip -t FAILED ($?)"
 		exit 1
 	fi
+	[ -e $OUT/$f.tar.gz ] && openssl dgst -sha256 $OUT/$f.tar.gz > $OUT/$f.SHA256
 	echo ' done'
 	vzctl umount $veid
 	vzctl destroy $veid
