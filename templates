@@ -27,7 +27,7 @@ FULL="centos-5-x86 \
 	  ubuntu-15.04-x86_64 \
 	  ubuntu-15.10-x86_64"
 
-BETA="fedora-23-x86_64 ubuntu-15.10-x86_64"
+BETA="fedora-23-x86_64 ubuntu-15.10-x86_64 ubuntu-15.10-x86_64-minimal"
 
 FLAVORS="centos-6-x86-minimal \
 		centos-6-x86_64-minimal \
@@ -44,6 +44,7 @@ FLAVORS="centos-6-x86-minimal \
 		ubuntu-14.04-x86-minimal \
 		ubuntu-14.04-x86_64-minimal \
 		ubuntu-15.04-x86_64-minimal \
+		ubuntu-15.10-x86_64-minimal \
 		centos-5-x86-devel \
 		centos-5-x86_64-devel \
 		centos-6-x86-devel \
