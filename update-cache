@@ -41,15 +41,17 @@ install() {
 		if isflavor $t; then
 			name=$(echo $t | sed 's/^\(.*\)-\(devel\|minimal\)$/\1/g')
 			log "[$i/$#] Full template name is $t, base template is $name"
-			if ! $YUM install -y $name"-ez"; then
-				log "[$i/$#] Failed to install $name"
-				exit 1
+			if ! rpm -q --quiet "$name"-ez; then
+				$YUM install -y $name"-ez" || ( log "[$i/$#] Failed to install $name"; exit 1 )
+			else
+				$YUM update -y $name"-ez" || ( log "[$i/$#] Failed to update $name"; exit 1 )
 			fi
 			prepare $t
 		else
-			if ! $YUM install -y $t"-ez"; then
-				log "[$i/$#] Failed to install $t"
-				exit 1
+			if ! rpm -q --quiet $t"-ez"; then
+				$YUM install -y $t"-ez" || ( log "[$i/$#] Failed to install $t"; exit 1 )
+			else
+				$YUM update -y $t"-ez" || ( log "[$i/$#] Failed to update $t"; exit 1 )
 			fi
 		fi
 		let i++
