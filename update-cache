@@ -6,78 +6,66 @@ export PATH=/sbin:/usr/sbin:$PATH
 VZPKG=vzpkg
 YUM=yum
 LIST=${*:-$(${VZPKG} list -O | awk '{print $1}')}
-BF=[1m
-NF=[0m
-GF=[32m
-SET_TITLE=']0;'
-ST='\\'
 
 log() {
 	local d=$(date +%H:%M:%S)
-	echo [${GF}${d}${NF}] ${BF}$*${NF}
+	echo [${d}] $*
 	echo [$d] $* >> update.log
-	echo -ne ${SET_TITLE}[$d] $*${ST}
+	echo -ne [$d] $*
 }
 
 isflavor() {
-	for f in $FLAVORS; do
-		if [ "$1" == "$f" ]; then
-			return 0
-		fi
-	done
+	FLAVOR=$(echo $1 | sed -e 's/^.*-\(minimal\|devel\)$/\1/g')
+	[ $FLAVOR == $1 ] && return 1 || return 0;
 }
 
 prepare() {
-	OS=$(echo $1 | sed 's/^\([a-z]*\)-.*$/\1/g')
-	ARCH=$(echo $1 | sed 's/^.*-.*-\(.*\)-.*$/\1/g')
-	V=$(echo $1 | sed 's/^.*-\(.*\)-x.*-.*$/\1/g')
-	FLAVOR=$(echo $1 | sed 's/^.*-.*-.*-\(.*\).*$/\1/g')
-	VZPATH=/vz/template/$OS/$V/$ARCH/config/os/;
-	if [ -e $VZPATH/$FLAVOR ]; then return 0; fi
-	mkdir $VZPATH/$FLAVOR
-	cd $VZPATH/$FLAVOR
+	FLAVOR=$(echo $1 | sed -e 's/^.*-\(minimal\|devel\)$/\1/g')
+	NAME=$(echo $t | sed 's/^\(.*\)-\(minimal\|devel\)$/\1/g')
+	CONFPATH=`$VZPKG info $NAME config_path | grep template | sed 's/^[ \t]*\(.*\)default$/\1/g'`
+	if [ -e $CONFPATH/$FLAVOR ]; then return 0; fi
+	mkdir $CONFPATH/$FLAVOR
+	cd $CONFPATH/$FLAVOR
 	ls -1 ../default/ | while read i; do ln -s ../default/$i $i; done
 	cd -
 	if ! rpm -q --quiet patch; then
 		yum install -y patch
 	fi
-	cat template/$1 | patch --directory $VZPATH/$FLAVOR/ 
+	cat template/$1 | patch --directory $CONFPATH/$FLAVOR/
 }
 
 install() {
-	local t redo='' i=1
+	local t i=1
 	for t in $*; do
 		log "[$i/$#] Installing template for $t"
 		if isflavor $t; then
-			name=$(echo $t | sed 's/^\(.*\)-.*$/\1/g')
-			log "[$i/$#] It is a flavor - $name"
+			name=$(echo $t | sed 's/^\(.*\)-\(devel\|minimal\)$/\1/g')
+			log "[$i/$#] Full template name is $t, base template is $name"
 			if ! $YUM install -y $name"-ez"; then
-				redo="$redo $t"
 				log "[$i/$#] Failed to install $name"
+				exit 1
 			fi
 			prepare $t
 		else
 			if ! $YUM install -y $t"-ez"; then
-				redo="$redo $t"
 				log "[$i/$#] Failed to install $t"
+				exit 1
 			fi
 		fi
 		let i++
 	done
-	RE=$redo
 }
 
 cache() {
-	local t redo='' i=1
+	local t i=1
 	for t in $*; do
 		log "[$i/$#] Updating cache for $t"
 		if ! $VZPKG update cache $t; then
-			redo="$redo $t"
 			log "[$i/$#] Failed to update $t"
+			exit 1
 		fi
 		let i++
 	done
-	RE=$redo
 }
 
 if ! test -z "$*"; then
@@ -87,18 +75,3 @@ fi
 log "=== (1) Starting to update templates: $LIST"
 install $LIST
 cache $LIST
-I=2
-MAX=5
-while test -n "$RE" -a $I -lt $MAX; do
-	log "=== ($I/$MAX) The following templates failed, retrying: $RE"
-	install $RE
-	cache $RE
-	let I++
-done
-if test -z "$RE"; then
-	log "=== ($I) All templates were updated succesfully"
-	exit 0
-else
-	log "=== ($I) Some templates were failed to update: $RE"
-	exit 1
-fi
