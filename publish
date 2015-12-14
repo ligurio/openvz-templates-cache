@@ -1,0 +1,157 @@
+#!/bin/sh
+
+# - download successfully builded templates from Jenkins
+# - sign each template by GPG sign
+# - upload templates to download.openvz.org
+# - update wiki page https://openvz.org/Download/template/precreated
+
+source templates
+
+S_DIR=${S_DIR:-/vz/template/cache/openvz}
+D_HOST=download.openvz.org
+D_DIR=/var/www/html/template/precreated
+WILDCARD="*"
+BATCHMODE="-o BatchMode=yes"
+SSH="ssh $BATCHMODE"
+SCP="scp $BATCHMODE -c blowfish"
+RSYNC="rsync -avvPO"
+ADD=
+RSYNC_OPTIONS=
+CHECK=yes
+
+set -o pipefail
+#rm -rf $S_DIR
+
+mkdir -p "$S_DIR/{beta,unsupported}"
+
+function cleanup() {
+    echo 1>&2
+    echo -n "Aborting, please wait ..." 1>&2
+    rm -rf $S_DIR
+    echo 1>&2
+}
+
+function download() {
+	template=$1
+	NEWDGST=`curl https://ci.openvz.org/view/OpenVZ%20Templates/job/openvz-$template/ws/cache/$template.SHA256 | awk '{ print $2 }'`
+	if [ -e $S_DIR/$template.tar.gz ]; then
+		OLDDGST=`openssl dgst -sha256 $S_DIR/$template | awk '{ print $2 }'`
+		if [ $NEWDGST != $OLDDGST ]; then
+			curl -O "https://ci.openvz.org/view/OpenVZ%20Templates/job/openvz-$template/ws/cache/$template.tar.gz"
+		fi
+	else
+		curl -O "https://ci.openvz.org/view/OpenVZ%20Templates/job/openvz-$template/ws/cache/$template.tar.gz"
+	fi
+}
+
+check_files() {
+	local file
+	for file in $*; do
+		echo -n "Checking $file ."
+		tar tf $file > /dev/null
+		if [ "$?" != '0' ]; then
+			echo " TAR_FAIL"
+			echo "File $file is not a proper tarball -- ABORTING!" 1>&2
+			exit 1
+		fi
+		echo -n "."
+		if ! test -f $file.asc; then
+			gpg -ab --batch $file
+			echo -n .
+		fi
+		gpg --quiet --verify $file.asc 2>/dev/null
+		if [ "$?" != '0' ]; then
+			echo " GPG_FAIL"
+			echo "File $file not signed -- ABORTING!" 1>&2
+			exit 1
+		fi
+		echo " OK"
+	done
+}
+
+trap cleanup EXIT
+
+while test $# -gt 0; do
+case $1 in
+	-c|--no-check|--nocheck)
+		CHECK=no
+		shift
+		;;
+	-b|--beta)
+		S_DIR=$S_DIR/beta
+		D_DIR=$D_DIR/beta
+		shift
+		;;
+	-u|--unsup*)
+		S_DIR=$S_DIR/unsupported
+		D_DIR=$D_DIR/unsupported
+		ADD=yes
+		shift
+		;;
+	-t)
+		shift
+		WILDCARD=$1
+		ADD=yes
+		shift
+		;;
+	-n|--dry-run)
+		shift
+		RSYNC_OPTIONS="$RSYNC_OPTIONS -n"
+		;;
+	-a|--add)
+		shift
+		ADD=yes
+		;;
+	*)
+		echo "ERROR: Invalid option: $1" 1>&2
+		exit 1
+esac
+done
+
+if test -z "$*"; then
+    LIST=$FULL
+else
+    LIST=$*
+fi
+
+for t in $LIST; do
+	echo "Downloading of $t..."
+	download $t && echo "DONE" || echo "Failed"
+done
+
+for t in $BETA; do
+	mv $t $S_DIR/beta
+done
+
+for t in $UNSUPPORTED; do
+	mv $t $S_DIR/unsupported
+done
+
+test "x$ADD" != "xyes" && RSYNC_OPTIONS="$RSYNC_OPTIONS --delete"
+
+SRC=$S_DIR/${WILDCARD}.tar.gz
+
+[ "$CHECK" = "no" ] || check_files $SRC
+
+SRC=$(ls $S_DIR/${WILDCARD}.tar.gz{,.asc})
+# do not use wildcard if not provided, copy the whole directory,
+# otherwise --delete is not working
+test "$WILDCARD" = "*" && SRC=$S_DIR/
+echo "Uploading $SRC to $D_HOST:$D_DIR ..."
+set -x
+$RSYNC  --exclude /\*/\* \
+	--exclude /\*/ \
+	--exclude HEADER.html \
+	--exclude .message \
+	--exclude .listing \
+	--exclude .\* \
+	--exclude contrib \
+	--exclude beta \
+	--exclude unsupported \
+	$RSYNC_OPTIONS -e ssh $SRC $D_HOST:$D_DIR || exit 1
+set +x
+echo "Copied everything to $D_HOST:$D_DIR"
+echo "Creating .listing..."
+$SSH $D_HOST "cd $D_DIR && ls *.tar.gz | sed 's/\.tar\.gz$//' > .listing && cat .listing"
+
+trap - EXIT
