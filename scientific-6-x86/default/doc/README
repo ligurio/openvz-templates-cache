@@ -1,0 +1,36 @@
+  Red Hat Enterprise Linux (v. 6) EZ OS template Release
+  Notes
+  Copyright (c) 2010 by Parallels
+
+
+  This document describes Red Hat Enterprise Linux (v. 6) EZ OS template
+  for Virtuozzo.
+  ______________________________________________________________________
+
+  Table of Contents
+
+
+  1. Prerequisites
+
+  2. Copyright information
+
+
+
+  ______________________________________________________________________
+
+  1.  Prerequisites
+
+  This OS template requires Virtuozzo version 4.0.0 or later with vzpkgenv47
+  4.6.0-1, vztt 4.0.0-139 and kernel 2.6.18-028stab061 or later installed.
+
+  Please note that this templates have some requirements to VE resources
+  which are covered by sample VE config named 'basic'. Additionally
+  you should set lockedpages to 2048:4096 and use vzctl 4.0.0-239 or later.
+
+  2.  Copyright information
+
+  Virtuozzo is product of Parallels,
+  http://www.parallels.com/
+
+  Red Hat Enterprise Linux (v. 6) OS is a product of Red Hat, Inc.,
+  http://www.redhat.com/

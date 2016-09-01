@@ -1,0 +1,56 @@
+#!/bin/bash
+
+mkdir -p etc/init
+
+echo "# upgrade - tell vzctl that start was successfull
+#
+# This task causes to tell vzctl that start was successfull
+
+description	\"tell vzctl that start was successfull\"
+
+start on startup
+
+task
+
+exec echo 2 > /.vzfifo
+" > etc/init/upgrade.conf
+
+rpm -e --nodeps sendmail-doc >/dev/null 2>&1
+rpm -e --nodeps samba-swat >/dev/null 2>&1
+rpm -e --nodeps rhpl >/dev/null 2>&1
+rpm -e --nodeps redhat-release >/dev/null 2>&1
+rpm -e --nodeps redhat-release-notes >/dev/null 2>&1
+rpm -e --nodeps perl-Net-IP >/dev/null 2>&1
+rpm -e --nodeps openssl-perl >/dev/null 2>&1
+rpm -e --nodeps --justdb nss >/dev/null 2>&1
+
+# Proftpd part
+rpm -e --nodeps proftpd >/dev/null 2>&1
+
+# Java part
+rpm -e --nodeps jakarta-commons-modeler >/dev/null 2>&1
+rpm -e --nodeps mx >/dev/null 2>&1
+rpm -e --nodeps java-1.4.2-gcj-compat >/dev/null 2>&1
+rpm -e --nodeps java-1.4.2-gcj-compat-devel >/dev/null 2>&1
+
+# Devel part
+rpm -e --nodeps gd-devel >/dev/null 2>&1
+rpm -e --nodeps expect-devel >/dev/null 2>&1
+rpm -e --nodeps slang-devel >/dev/null 2>&1
+rpm -e --nodeps hesiod-devel >/dev/null 2>&1
+rpm -e --nodeps sendmail-devel >/dev/null 2>&1
+rpm -e --nodeps elfutils-libelf-devel >/dev/null 2>&1
+rpm -e --nodeps elfutils-devel-static >/dev/null 2>&1
+rpm -e --nodeps elfutils-libelf-devel-static >/dev/null 2>&1
+rpm -e --nodeps newt-devel >/dev/null 2>&1
+
+# Php part
+rpm -e --nodeps php-devel >/dev/null 2>&1
+rpm -e --nodeps php-mbstring >/dev/null 2>&1
+rpm -e --nodeps php-imap >/dev/null 2>&1
+rpm -e --nodeps php-ncurses >/dev/null 2>&1
+rpm -e --nodeps php-mbstring >/dev/null 2>&1
+rpm -e --nodeps php-snmp >/dev/null 2>&1
+
+rpm -e --nodeps perl-Archive-Tar >/dev/null 2>&1
+:
